@@ -27,27 +27,6 @@ export default function IdeaScreen() {
   const [selectedIdea, setSelectedIdea] = useState(null);
   const person = people.find((person) => person.id === personId); // Get person details
 
-  const fetchIdeas = async () => {
-    try {
-      // Fetch stored people from AsyncStorage
-      const storedPeople = await AsyncStorage.getItem(STORAGE_KEY);
-      if (storedPeople) {
-        const parsedPeople = JSON.parse(storedPeople);
-        // Find the person with the given personId and set their ideas
-        const foundPerson = parsedPeople.find(
-          (person) => person.id === personId
-        );
-        if (foundPerson) {
-          const fetchedIdeas = foundPerson.ideas;
-          console.log("Fetched ideas:", fetchedIdeas); // Log the fetched ideas
-          setIdeas(fetchedIdeas);
-        }
-      }
-    } catch (error) {
-      console.error("Failed to fetch ideas", error);
-    }
-  };
-
   const handleDeleteIdea = async () => {
     if (selectedIdea) {
       await deleteIdea(selectedIdea.id, personId); // Call delete function with idea ID and person ID
