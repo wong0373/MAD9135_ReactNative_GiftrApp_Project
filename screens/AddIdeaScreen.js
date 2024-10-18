@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -6,7 +6,11 @@ import {
   Image,
   StyleSheet,
   Alert,
+  KeyboardAvoidingView,
   TextInput,
+  Platform,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { CameraView, useCameraPermissions } from "expo-camera";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -73,57 +77,68 @@ export default function AddIdeaScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      {!photo ? (
-        <CameraView
-          style={styles.camera}
-          facing={facing}
-          ref={(ref) => setCameraRef(ref)}
-        >
-          <View style={styles.cameraContainer}>
-            <TouchableOpacity
-              style={styles.flipButton}
-              onPress={toggleCameraFacing}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={styles.container}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.container}>
+          {!photo ? (
+            <CameraView
+              style={styles.camera}
+              facing={facing}
+              ref={(ref) => setCameraRef(ref)}
             >
-              <Text style={styles.flipText}> Flip </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.captureButton}
-              onPress={takePicture}
-            >
-              <Text style={styles.captureText}> Take Picture </Text>
-            </TouchableOpacity>
-          </View>
-        </CameraView>
-      ) : (
-        <View style={styles.previewContainer}>
-          <Image source={{ uri: photo }} style={styles.imagePreview} />
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your idea"
-            value={text}
-            onChangeText={setText}
-          />
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.captureButton}
-              onPress={() => setPhoto(null)}
-            >
-              <Text style={styles.captureText}> Retake </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-              <Text style={styles.saveText}> Save </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.cancelButton}
-              onPress={() => navigation.navigate("Ideas", { personId })}
-            >
-              <Text style={styles.cancelText}> Cancel </Text>
-            </TouchableOpacity>
-          </View>
+              <View style={styles.cameraContainer}>
+                <TouchableOpacity
+                  style={styles.flipButton}
+                  onPress={toggleCameraFacing}
+                >
+                  <Text style={styles.flipText}> Flip </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.flipButton}
+                  onPress={takePicture}
+                >
+                  <Text style={styles.flipText}> Take Picture </Text>
+                </TouchableOpacity>
+              </View>
+            </CameraView>
+          ) : (
+            <View style={styles.previewContainer}>
+              <Image source={{ uri: photo }} style={styles.imagePreview} />
+
+              <TextInput
+                style={styles.input}
+                placeholder="Enter your idea"
+                value={text}
+                onChangeText={setText}
+              />
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  style={styles.retakeButton}
+                  onPress={() => setPhoto(null)}
+                >
+                  <Text style={styles.retakeText}> Retake </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.saveButton}
+                  onPress={handleSave}
+                >
+                  <Text style={styles.saveText}> Save </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.cancelButton}
+                  onPress={() => navigation.navigate("Ideas", { personId })}
+                >
+                  <Text style={styles.cancelText}> Cancel </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
         </View>
-      )}
-    </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -146,26 +161,23 @@ const styles = StyleSheet.create({
   flipButton: {
     alignSelf: "flex-end",
     alignItems: "center",
-    backgroundColor: "#ffffff",
+    backgroundColor: "#fff",
     borderRadius: 10,
-    padding: 10,
+    padding: 15,
   },
   flipText: {
     fontSize: 18,
-    color: "#000000",
+    color: "#000",
   },
   captureButton: {
-    alignSelf: "center",
+    alignSelf: "flex-end",
     alignItems: "center",
-    backgroundColor: "#ffffff",
+    backgroundColor: "#2196F3",
     borderRadius: 10,
     padding: 15,
-    marginBottom: 20,
+    marginBottom: 30,
   },
-  captureText: {
-    fontSize: 18,
-    color: "#000000",
-  },
+
   previewContainer: {
     flex: 1,
     justifyContent: "center",
@@ -177,7 +189,7 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
     borderRadius: 10, // Rounded corners for the image preview
     borderWidth: 1,
-    borderColor: "#ddd", // Subtle border around the image
+    borderColor: "#ccc", // Subtle border around the image
   },
   input: {
     height: 50,
@@ -192,33 +204,49 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    width: "80%",
-    marginTop: 10,
+    marginTop: 5,
+  },
+  retakeButton: {
+    alignSelf: "flex-end",
+    alignItems: "center",
+    backgroundColor: "#2196F3",
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 30,
+    marginHorizontal: 10,
   },
   saveButton: {
-    flex: 1,
-    marginHorizontal: 5,
+    alignSelf: "flex-end",
     alignItems: "center",
     backgroundColor: "green",
     borderRadius: 10,
     padding: 15,
+    marginHorizontal: 10,
+    marginBottom: 30,
   },
   saveText: {
     fontSize: 18,
     color: "#ffffff",
   },
   cancelButton: {
-    flex: 1,
-    marginHorizontal: 5,
+    alignSelf: "flex-end",
     alignItems: "center",
     backgroundColor: "red",
     borderRadius: 10,
     padding: 15,
+    marginHorizontal: 10,
+    marginBottom: 30,
   },
   cancelText: {
     fontSize: 18,
     color: "#ffffff",
   },
+
+  retakeText: {
+    fontSize: 18,
+    color: "#ffffff",
+  },
+
   permissionButton: {
     alignItems: "center",
     backgroundColor: "blue",

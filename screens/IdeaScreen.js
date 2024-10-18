@@ -53,18 +53,8 @@ export default function IdeaScreen() {
       await deleteIdea(selectedIdea.id, personId); // Call delete function with idea ID and person ID
       setModalVisible(false);
       setSelectedIdea(null);
-      //fetchIdeas();
     }
   };
-
-  //   const handleDeleteIdea = async () => {
-  //     if (selectedIdea) {
-  //       await deleteIdea(selectedIdea.id, personId); // Call delete function with idea ID and person ID
-  //       setModalVisible(false);
-  //       setSelectedIdea(null);
-  //       fetchIdeas(); // Fetch ideas again after
-  //     }
-  //   };
 
   const renderIdeaItem = ({ item }) => (
     <View style={styles.ideaContainer}>
