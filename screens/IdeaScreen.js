@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   Text,
@@ -13,9 +13,6 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import PeopleContext from "../PeopleContext";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import Icon from "react-native-vector-icons/Ionicons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
-const STORAGE_KEY = "people";
 
 export default function IdeaScreen() {
   const navigation = useNavigation();

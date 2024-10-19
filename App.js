@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import AppNavigator from "./AppNavigator";
 import { PeopleProvider } from "./PeopleContext";
 

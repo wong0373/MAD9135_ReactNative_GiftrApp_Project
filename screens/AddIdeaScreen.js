@@ -94,13 +94,13 @@ export default function AddIdeaScreen() {
                   style={styles.flipButton}
                   onPress={toggleCameraFacing}
                 >
-                  <Text style={styles.flipText}> Flip </Text>
+                  <Text style={styles.cameraText}> Flip </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.flipButton}
                   onPress={takePicture}
                 >
-                  <Text style={styles.flipText}> Take Picture </Text>
+                  <Text style={styles.cameraText}> Take Picture </Text>
                 </TouchableOpacity>
               </View>
             </CameraView>
@@ -143,6 +143,11 @@ export default function AddIdeaScreen() {
 }
 
 const styles = StyleSheet.create({
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 5,
+  },
   container: {
     flex: 1,
     backgroundColor: "#f8f8f8",
@@ -158,24 +163,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     margin: 20,
   },
+  cameraText: {
+    fontSize: 18,
+    color: "#000",
+  },
   flipButton: {
     alignSelf: "flex-end",
     alignItems: "center",
     backgroundColor: "#fff",
     borderRadius: 10,
     padding: 15,
-  },
-  flipText: {
-    fontSize: 18,
-    color: "#000",
-  },
-  captureButton: {
-    alignSelf: "flex-end",
-    alignItems: "center",
-    backgroundColor: "#2196F3",
-    borderRadius: 10,
-    padding: 15,
-    marginBottom: 30,
   },
 
   previewContainer: {
@@ -201,11 +198,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "#fff",
   },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 5,
-  },
+
   retakeButton: {
     alignSelf: "flex-end",
     alignItems: "center",
@@ -214,6 +207,10 @@ const styles = StyleSheet.create({
     padding: 15,
     marginBottom: 30,
     marginHorizontal: 10,
+  },
+  retakeText: {
+    fontSize: 18,
+    color: "#ffffff",
   },
   saveButton: {
     alignSelf: "flex-end",
@@ -238,11 +235,6 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   cancelText: {
-    fontSize: 18,
-    color: "#ffffff",
-  },
-
-  retakeText: {
     fontSize: 18,
     color: "#ffffff",
   },

@@ -55,7 +55,6 @@ export const PeopleProvider = ({ children }) => {
   // Define the getIdeasForPerson function
   const getIdeasForPerson = async (personId) => {
     try {
-      console.log("checkpoint 0 person id", personId);
       const person = JSON.parse(await AsyncStorage.getItem(STORAGE_KEY));
       return person.filter((person) => person.id === personId)[0].ideas;
     } catch (error) {
