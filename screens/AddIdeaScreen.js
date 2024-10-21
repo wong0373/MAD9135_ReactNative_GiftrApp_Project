@@ -22,7 +22,7 @@ export default function AddIdeaScreen() {
   const [cameraRef, setCameraRef] = useState(null);
   const [facing, setFacing] = useState("back");
   const [photo, setPhoto] = useState(null);
-  const [text, setText] = useState(""); // Text input state for idea
+  const [text, setText] = useState("");
   const { saveIdeas } = useContext(PeopleContext);
   const navigation = useNavigation();
   const route = useRoute();
@@ -184,9 +184,9 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "80%",
     resizeMode: "contain",
-    borderRadius: 10, // Rounded corners for the image preview
+    borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#ccc", // Subtle border around the image
+    borderColor: "#ccc",
   },
   input: {
     height: 50,

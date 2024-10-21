@@ -132,9 +132,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     padding: 16,
     margin: 8,
-    marginVertical: 8, // Space between each item
-    borderRadius: 8, // Rounded corners for items
-    shadowColor: "#000", // Shadow for some elevation effect
+    marginVertical: 8,
+    borderRadius: 8,
+    shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 3,
