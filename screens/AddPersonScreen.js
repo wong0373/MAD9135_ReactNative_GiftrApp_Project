@@ -1,12 +1,14 @@
 import React, { useContext, useState } from "react";
 import {
   View,
+  Text,
   TextInput,
   Button,
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
   Keyboard,
+  Modal,
   TouchableWithoutFeedback,
 } from "react-native";
 import PeopleContext from "../PeopleContext";
@@ -19,11 +21,14 @@ export default function AddPersonScreen() {
   const [dob, setDob] = useState("");
   const { addPerson } = useContext(PeopleContext);
   const navigation = useNavigation();
+  const [modalVisible, setModalVisible] = useState(false);
 
   const savePerson = () => {
     if (name && dob) {
       addPerson(name, dob);
       navigation.goBack();
+    } else {
+      setModalVisible(true);
     }
   };
 
@@ -59,6 +64,27 @@ export default function AddPersonScreen() {
             </View>
           </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            setModalVisible(!modalVisible);
+          }}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalText}>
+                Please complete both Name and Date of Birth!
+              </Text>
+              <Button
+                title="OK"
+                onPress={() => setModalVisible(false)}
+                color="#2196F3"
+              />
+            </View>
+          </View>
+        </Modal>
       </SafeAreaView>
     </SafeAreaProvider>
   );
@@ -89,5 +115,21 @@ const styles = StyleSheet.create({
   },
   buttonSpacing: {
     width: 16,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    backgroundColor: "#fff",
+    padding: 20,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  modalText: {
+    fontSize: 18,
+    marginBottom: 20,
   },
 });

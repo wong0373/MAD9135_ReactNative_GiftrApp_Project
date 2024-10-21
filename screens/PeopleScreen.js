@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import {
   Button,
   FlatList,
@@ -14,13 +14,23 @@ import {
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import PeopleContext from "../PeopleContext";
 import { Swipeable } from "react-native-gesture-handler";
-import Icon from "react-native-vector-icons/Ionicons";
 
 export default function PeopleScreen() {
   const navigation = useNavigation();
   const { people, deletePerson } = useContext(PeopleContext);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedPerson, setSelectedPerson] = useState(null);
+  const [sortedPeople, setSortedPeople] = useState([]);
+
+  useEffect(() => {
+    const sorted = [...people].sort((a, b) => {
+      const dateA = new Date(a.dob.replace(/\//g, "-"));
+      const dateB = new Date(b.dob.replace(/\//g, "-"));
+
+      return dateA - dateB;
+    });
+    setSortedPeople(sorted);
+  }, [people]);
 
   const handleDelete = async () => {
     if (selectedPerson) {
@@ -48,7 +58,7 @@ export default function PeopleScreen() {
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
         <FlatList
-          data={people}
+          data={sortedPeople}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => {
             return (
